@@ -1,0 +1,10 @@
+# bookmarkbot.ini
+
+[email]
+imap_server = <mailbox_imap_server>
+username = <mailbox>
+password = <mailbox_password>
+
+[pinboard]
+username = <pinboard_username>
+password = <pinboard_password>

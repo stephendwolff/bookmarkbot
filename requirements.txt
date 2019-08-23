@@ -1,0 +1,2 @@
+Unipath==1.1
+git+git://github.com/mgan59/python-pinboard.git@v1.1#egg=python-pinboard
