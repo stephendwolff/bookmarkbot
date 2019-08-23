@@ -13,3 +13,7 @@ If the script is set up in a *nix home directory, with a virtualenvironment cont
 ```
 0 22 * * * bookmark . /home/bookmark/venv/bookmark/bin/activate && cd /home/bookmark/bookmarkbot && python bookmarkbot.py
 ```
+
+Credits
+------
+Ed Mitchell - for the idea and funding
