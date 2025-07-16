@@ -121,10 +121,13 @@ if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read("bookmarkbot.ini")
 
-    imap_server = config.get('email', 'imap_server')
-    email_username = config.get('email', 'username')
-    email_password = config.get('email', 'password')
-    pinboard_username = config.get('pinboard', 'username')
-    pinboard_password = config.get('pinboard', 'password')
+    imap_server = config.get('email', 'imap_server').strip()
+    email_username = config.get('email', 'username').strip()
+    email_password = config.get('email', 'password').strip()
+    pinboard_username = config.get('pinboard', 'username').strip()
+    pinboard_password = config.get('pinboard', 'password').strip()
+    
+    # Debug: print the exact server string
+    print(f"Connecting to IMAP server: '{imap_server}' (length: {len(imap_server)})")
 
     run_bookmarkbot(imap_server, email_username, email_password, pinboard_username, pinboard_password)
