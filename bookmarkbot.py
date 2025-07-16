@@ -121,12 +121,10 @@ if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read("bookmarkbot.ini")
 
-    dConfig = config.__dict__['_sections'].copy()
-
-    imap_server = dConfig['email']['imap_server']
-    email_username = dConfig['email']['username']
-    email_password = dConfig['email']['password']
-    pinboard_username = dConfig['pinboard']['username']
-    pinboard_password = dConfig['pinboard']['password']
+    imap_server = config.get('email', 'imap_server')
+    email_username = config.get('email', 'username')
+    email_password = config.get('email', 'password')
+    pinboard_username = config.get('pinboard', 'username')
+    pinboard_password = config.get('pinboard', 'password')
 
     run_bookmarkbot(imap_server, email_username, email_password, pinboard_username, pinboard_password)
