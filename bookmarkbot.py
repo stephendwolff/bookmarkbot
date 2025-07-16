@@ -114,9 +114,9 @@ def get_first_text_block(msg):
 
 
 if __name__ == "__main__":
-    import ConfigParser
+    import configparser
 
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read("bookmarkbot.ini")
 
     dConfig = config.__dict__['_sections'].copy()
