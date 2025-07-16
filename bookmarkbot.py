@@ -14,7 +14,7 @@ PROJECT_DIR = Path(__file__).ancestor(1)
 LOG_DIR = PROJECT_DIR.child('log')
 
 
-daily_log = LOG_DIR + '/log-' + str(time.strftime("%m-%d-%y")) + '.log'
+daily_log = str(LOG_DIR.child('log-' + str(time.strftime("%m-%d-%y")) + '.log'))
 logging.basicConfig(
     format='%(asctime)s (%(levelname)s) - %(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p',
@@ -25,6 +25,8 @@ logging.info('Starting logger for Bookmarkbot')
 
 
 def run_bookmarkbot(_imap_server, _email_username, _email_password, _pinboard_username, _pinboard_password):
+    logging.info(f'_imap_server={_imap_server}, _email_username={_email_username}')
+    logging.info(f'_pinboard_username={_pinboard_username}')
     mail_box = imaplib.IMAP4_SSL(_imap_server)
 
     try:
@@ -61,13 +63,13 @@ def process_mailbox(mailbox, _pinboard_username, _pinboard_password):
                 logging.error("ERROR getting message {0}".format(num))
                 return
 
-            msg = email.message_from_string(data2[0][1])
+            msg = email.message_from_bytes(data2[0][1])
 
             dh = decode_header(msg.get('subject'))
 
             default_charset = 'ASCII'
 
-            subject = ''.join([unicode(t[0], t[1] or default_charset) for t in dh])
+            subject = ''.join([str(t[0], t[1] or default_charset) if isinstance(t[0], bytes) else t[0] for t in dh])
 
             charmap = {
                 0x201c: u'"',
@@ -86,7 +88,7 @@ def process_mailbox(mailbox, _pinboard_username, _pinboard_password):
 
             body = get_first_text_block(msg)
             urls = re.findall(
-                'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+                r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
                 body)
 
             logging.info(u'URL: {0}'.format(urls[0]))
