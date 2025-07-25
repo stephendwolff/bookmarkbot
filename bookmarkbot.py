@@ -87,6 +87,8 @@ def process_mailbox(mailbox, _pinboard_username, _pinboard_password):
             logging.info(u'Raw Date: {0}'.format(msg['Date']))
 
             body = get_first_text_block(msg)
+            if isinstance(body, bytes):
+                body = body.decode('utf-8', errors='replace')
             urls = re.findall(
                 r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
                 body)
